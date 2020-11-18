@@ -1,6 +1,7 @@
 import scrapy
 from ..items import NewscrawlerItem
 
+
 class QuoteSpider(scrapy.Spider):
     name = 'firstTry'
     page_number = 2
@@ -8,7 +9,7 @@ class QuoteSpider(scrapy.Spider):
         'https://www.truthorfiction.com/page/1/',
     ]
 
-    def parse(self, response):
+    def parse(self, response, **kwargs):
         items = NewscrawlerItem()
 
         titles = response.css('.entry-title a::text').extract()
