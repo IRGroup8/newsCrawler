@@ -3,11 +3,12 @@ from ..items import NewscrawlerItem
 
 class QuoteSpider(scrapy.Spider):
     name = 'firstTry'
+    page_number = 2
     start_urls = [
         'https://www.truthorfiction.com/page/1/',
     ]
 
-    def _parse(self, response, **kwargs):
+    def parse(self, response):
         items = NewscrawlerItem()
 
         titles = response.css('.entry-title a::text').extract()
@@ -19,6 +20,10 @@ class QuoteSpider(scrapy.Spider):
             items['dates'] = dates[i]
             yield items
 
+        next_page = 'https://www.truthorfiction.com/page/'+str(QuoteSpider.page_number)+'/'
+        if QuoteSpider.page_number < 515:
+            QuoteSpider.page_number += 1
+            yield response.follow(next_page, callback=self.parse)
 
       #  for i in range(len(titles)):
       #      yield {
