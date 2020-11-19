@@ -4,6 +4,7 @@ from ..items import NewscrawlerItem
 class QuoteSpider(scrapy.Spider):
     name = 'firstTry'
     page_number = 2
+    allowed_domains = ['truthorfiction.com']
     start_urls = [
         'https://www.truthorfiction.com/page/1/',
     ]
