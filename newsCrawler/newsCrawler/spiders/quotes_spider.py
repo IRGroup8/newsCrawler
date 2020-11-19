@@ -26,7 +26,7 @@ class QuoteSpider(scrapy.Spider):
             yield items
 
         next_page = 'https://www.truthorfiction.com/page/'+str(QuoteSpider.page_number)+'/'
-        if QuoteSpider.page_number < 515:
+        if QuoteSpider.page_number < 10:
             QuoteSpider.page_number += 1
             yield response.follow(next_page, callback=self.parse)
 
