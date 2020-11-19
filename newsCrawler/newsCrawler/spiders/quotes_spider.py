@@ -34,8 +34,8 @@ class QuoteSpider(scrapy.Spider):
         for i in range(len(page_Urls)):
             yield response.follow(page_Urls[i],callback=self.parse_news)
 
-        next_page = 'https://www.truthorfiction.com/page/%27+str(QuoteSpider.page_number)+%27/'
-        if QuoteSpider.page_number < 5:
+        next_page = 'https://www.truthorfiction.com/page/'+str(QuoteSpider.page_number)+'/'
+        if QuoteSpider.page_number < 12:
             QuoteSpider.page_number += 1
             yield response.follow(next_page, callback=self.parse)
 
