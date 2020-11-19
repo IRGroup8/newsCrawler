@@ -16,10 +16,15 @@ class QuoteSpider(scrapy.Spider):
         authors = response.css('.author-name::text').extract()
         dates = response.css('.published::text').extract()
         url = response.request.url
+        tags = response.css(".rating-description span::text").extract()
+        content = response.css(".entry-content p::text").extract()
+        # adding to item
         items['titles'] = titles
         items['authors'] = authors
         items['dates'] = dates
         items['page_Url'] = url
+        items['tags'] = tags
+        items['content'] = content
         yield items
 
     def parse(self, response):
