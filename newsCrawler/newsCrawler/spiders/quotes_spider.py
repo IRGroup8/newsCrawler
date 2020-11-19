@@ -39,9 +39,3 @@ class QuoteSpider(scrapy.Spider):
             QuoteSpider.page_number += 1
             yield response.follow(next_page, callback=self.parse)
 
-      #  for i in range(len(titles)):
-      #      yield {
-      #          'title': titles[i],
-      #          'author': authors[i],
-      #          'date': dates[i]
-      #      }
