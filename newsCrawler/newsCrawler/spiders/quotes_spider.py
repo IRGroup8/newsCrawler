@@ -19,10 +19,12 @@ class QuoteSpider(scrapy.Spider):
         titles = response.css('.entry-title a::text').extract()
         authors = response.css('.author-name::text').extract()
         dates = response.css('.published::text').extract()
+        page_Url = 'https://www.truthorfiction.com/page/'+str(QuoteSpider.page_number-1)+'/'
         for i in range(len(titles)):
             items['titles'] = titles[i]
             items['authors'] = authors[i]
             items['dates'] = dates[i]
+            items['page_Url'] = page_Url
             yield items
 
         next_page = self.set_url(url=self.start_urls[0], page_no=self.page_no)
