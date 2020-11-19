@@ -18,6 +18,7 @@ class QuoteSpider(scrapy.Spider):
         url = response.request.url
         tags = response.css(".rating-description span::text").extract()
         content = response.css(".entry-content p::text").extract()
+        cats = response.css('.cat-links a::text').extract()
         # adding to item
         items['titles'] = titles
         items['authors'] = authors
@@ -25,6 +26,7 @@ class QuoteSpider(scrapy.Spider):
         items['page_Url'] = url
         items['tags'] = tags
         items['content'] = content
+        items['cats'] = cats
         yield items
 
     def parse(self, response):
