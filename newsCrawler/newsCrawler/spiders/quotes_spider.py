@@ -3,7 +3,6 @@ from ..items import NewscrawlerItem
 
 
 class QuoteSpider(scrapy.Spider):
-
     name = 'firstTry'
     page_number = 2
     allowed_domains = ['truthorfiction.com']
@@ -11,22 +10,25 @@ class QuoteSpider(scrapy.Spider):
         'https://www.truthorfiction.com/page/1/',
     ]
 
-    def parse(self, response):
+    def parse_news(self, response):
         items = NewscrawlerItem()
-
-        titles = response.css('.entry-title a::text').extract()
+        titles = response.css('.entry-title::text').extract()
         authors = response.css('.author-name::text').extract()
         dates = response.css('.published::text').extract()
-        page_Urls = response.css('.entry-title a').xpath("@href").extract()
-        for i in range(len(titles)):
-            items['titles'] = titles[i]
-            items['authors'] = authors[i]
-            items['dates'] = dates[i]
-            items['page_Url'] = page_Urls[i]
-            yield items
+        url = response.request.url
+        items['titles'] = titles
+        items['authors'] = authors
+        items['dates'] = dates
+        items['page_Url'] = url
+        yield items
 
-        next_page = 'https://www.truthorfiction.com/page/'+str(QuoteSpider.page_number)+'/'
-        if QuoteSpider.page_number < 10:
+    def parse(self, response):
+        page_Urls = response.css('.entry-title a').xpath("@href").extract()
+        for i in range(len(page_Urls)):
+            yield response.follow(page_Urls[i],callback=self.parse_news)
+
+        next_page = 'https://www.truthorfiction.com/page/%27+str(QuoteSpider.page_number)+%27/'
+        if QuoteSpider.page_number < 5:
             QuoteSpider.page_number += 1
             yield response.follow(next_page, callback=self.parse)
 
@@ -36,5 +38,3 @@ class QuoteSpider(scrapy.Spider):
       #          'author': authors[i],
       #          'date': dates[i]
       #      }
-
-
