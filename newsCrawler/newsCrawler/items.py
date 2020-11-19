@@ -14,5 +14,6 @@ class NewscrawlerItem(scrapy.Item):
     page_Url = scrapy.Field()
     tags = scrapy.Field()
     content = scrapy.Field()
+    cats = scrapy.Field()
     # name = scrapy.Field()
     #pass
