@@ -12,5 +12,7 @@ class NewscrawlerItem(scrapy.Item):
     authors = scrapy.Field()
     dates = scrapy.Field()
     page_Url = scrapy.Field()
+    tags = scrapy.Field()
+    content = scrapy.Field()
     # name = scrapy.Field()
     #pass
